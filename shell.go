@@ -8,8 +8,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/bhendo/go-powershell/backend"
-	"github.com/bhendo/go-powershell/utils"
+	"github.com/hibri/go-powershell/backend"
+	"github.com/hibri/go-powershell/utils"
 	"github.com/juju/errors"
 )
 
@@ -28,7 +28,7 @@ type shell struct {
 }
 
 func New(backend backend.Starter) (Shell, error) {
-	handle, stdin, stdout, stderr, err := backend.StartProcess("powershell.exe", "-NoExit", "-Command", "-")
+	handle, stdin, stdout, stderr, err := backend.StartProcess("pwsh", "-NoExit", "-Command", "-")
 	if err != nil {
 		return nil, err
 	}
