@@ -5,7 +5,7 @@ package powershell
 import (
 	"fmt"
 	"io"
-	"strings"
+	"regexp"
 	"sync"
 
 	"github.com/bhendo/go-powershell/backend"
@@ -93,7 +93,7 @@ func streamReader(stream io.Reader, boundary string, buffer *string, signal *syn
 	// read all output until we have found our boundary token
 	output := ""
 	bufsize := 64
-	marker := boundary + newline
+	marker := regexp.MustCompile("(?s)(.*)" + regexp.QuoteMeta(boundary))
 
 	for {
 		buf := make([]byte, bufsize)
@@ -104,12 +104,12 @@ func streamReader(stream io.Reader, boundary string, buffer *string, signal *syn
 
 		output = output + string(buf[:read])
 
-		if strings.HasSuffix(output, marker) {
+		if marker.MatchString(output) {
 			break
 		}
 	}
 
-	*buffer = strings.TrimSuffix(output, marker)
+	*buffer = marker.FindStringSubmatch(output)[1]
 	signal.Done()
 
 	return nil
