@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/bhendo/go-powershell/utils"
-	"github.com/juju/errors"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -83,12 +83,12 @@ func (c *UserPasswordCredential) prepare(s Middleware) (interface{}, error) {
 
 	_, _, err := s.Execute(fmt.Sprintf("$%s = ConvertTo-SecureString -String %s -AsPlainText -Force", pwname, utils.QuoteArg(c.Password)))
 	if err != nil {
-		return nil, errors.Annotate(err, "Could not convert password to secure string")
+		return nil, errors.Wrap(err, "Could not convert password to secure string")
 	}
 
 	_, _, err = s.Execute(fmt.Sprintf("$%s = New-Object -TypeName 'System.Management.Automation.PSCredential' -ArgumentList %s, $%s", name, utils.QuoteArg(c.Username), pwname))
 	if err != nil {
-		return nil, errors.Annotate(err, "Could not create PSCredential object")
+		return nil, errors.Wrap(err, "Could not create PSCredential object")
 	}
 
 	return fmt.Sprintf("$%s", name), nil
