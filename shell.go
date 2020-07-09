@@ -8,9 +8,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/bhendo/go-powershell/backend"
-	"github.com/bhendo/go-powershell/utils"
 	"github.com/juju/errors"
+	"github.com/simonjanss/go-powershell/backend"
+	"github.com/simonjanss/go-powershell/utils"
 )
 
 const newline = "\r\n"
@@ -18,6 +18,7 @@ const newline = "\r\n"
 type Shell interface {
 	Execute(cmd string) (string, string, error)
 	Exit()
+	Close()
 }
 
 type shell struct {
@@ -88,6 +89,8 @@ func (s *shell) Exit() {
 	s.stdout = nil
 	s.stderr = nil
 }
+
+func (s *shell) Close() { s.Exit() }
 
 func streamReader(stream io.Reader, boundary string, buffer *string, signal *sync.WaitGroup) error {
 	// read all output until we have found our boundary token

@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/bhendo/go-powershell/utils"
 	"github.com/juju/errors"
+	"github.com/simonjanss/go-powershell/utils"
 )
 
 type session struct {

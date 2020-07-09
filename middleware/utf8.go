@@ -6,7 +6,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
-	"github.com/bhendo/go-powershell/utils"
+	"github.com/simonjanss/go-powershell/utils"
 )
 
 // utf8 implements a primitive middleware that encodes all outputs
