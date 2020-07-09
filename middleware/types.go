@@ -5,4 +5,5 @@ package middleware
 type Middleware interface {
 	Execute(cmd string) (string, string, error)
 	Exit()
+	Close()
 }

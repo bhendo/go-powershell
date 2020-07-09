@@ -84,6 +84,7 @@ func main() {
 		panic(err)
 	}
 	defer session.Exit() // will also close the underlying ps shell!
+	defer session.Close() // will disconnect the current session
 
 	// everything run via the session is run on the remote machine
 	stdout, stderr, err = session.Execute("Get-WmiObject -Class Win32_Processor")

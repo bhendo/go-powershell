@@ -45,3 +45,7 @@ func (s *session) Exit() {
 	s.upstream.Execute(fmt.Sprintf("Disconnect-PSSession -Session $%s", s.name))
 	s.upstream.Exit()
 }
+
+func (s *session) Close() {
+	s.upstream.Execute(fmt.Sprintf("Disconnect-PSSession -Session $%s", s.name))
+}
