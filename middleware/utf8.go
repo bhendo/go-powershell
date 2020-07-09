@@ -47,3 +47,7 @@ func (u *utf8) Execute(cmd string) (string, string, error) {
 func (u *utf8) Exit() {
 	u.upstream.Exit()
 }
+
+func (u *utf8) Close() {
+	u.upstream.Close()
+}
